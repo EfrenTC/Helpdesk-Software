@@ -1,6 +1,7 @@
 package org.factoriaf5.digiital_academy.controller;
 
 import org.factoriaf5.digiital_academy.dto.SolicitudRequest;
+import org.factoriaf5.digiital_academy.dto.SolicitudRequest.SolicitudAtenderRequest;
 import org.factoriaf5.digiital_academy.dto.SolicitudResponse;
 import org.factoriaf5.digiital_academy.service.SolicitudService;
 import org.springframework.http.ResponseEntity;
@@ -30,4 +31,20 @@ public class SolicitudController {
         List<SolicitudResponse> response = solicitudService.listarSolicitudesOrdenadas();
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/{id}/estado")
+    public ResponseEntity<String> obtenerEstado(@PathVariable Long id) {
+        String estado = solicitudService.obtenerEstadoSolicitud(id);
+        return ResponseEntity.ok(estado);
+    }
+
+    @PatchMapping("/{id}/atender")
+public ResponseEntity<SolicitudResponse> atenderSolicitud(
+        @PathVariable Long id,
+        @Valid @RequestBody SolicitudAtenderRequest request) {
+    SolicitudResponse response = solicitudService.atenderSolicitud(id, request.getNombreTecnico());
+    return ResponseEntity.ok(response);
+}
+
+
 }
