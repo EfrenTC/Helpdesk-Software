@@ -1,6 +1,5 @@
 package org.factoriaf5.digiital_academy.service;
 
-
 import org.factoriaf5.digiital_academy.dto.SolicitudRequest;
 import org.factoriaf5.digiital_academy.dto.SolicitudResponse;
 import org.factoriaf5.digiital_academy.model.Solicitud;
@@ -8,9 +7,12 @@ import org.factoriaf5.digiital_academy.model.Tema;
 import org.factoriaf5.digiital_academy.repository.SolicitudRepository;
 import org.factoriaf5.digiital_academy.repository.TemaRepository;
 import org.factoriaf5.digiital_academy.exception.TemaNotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SolicitudService {
@@ -36,7 +38,24 @@ public class SolicitudService {
         solicitud.setCreatedAt(LocalDateTime.now());
 
         Solicitud saved = solicitudRepository.save(solicitud);
-        return new SolicitudResponse(saved.getId(), saved.getCreatedAt());
+        return mapToResponse(saved);
+    }
+
+    public List<SolicitudResponse> listarSolicitudesOrdenadas() {
+        List<Solicitud> solicitudes = solicitudRepository.findAll(Sort.by(Sort.Direction.ASC, "createdAt"));
+        return solicitudes.stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    private SolicitudResponse mapToResponse(Solicitud solicitud) {
+        return new SolicitudResponse(
+                solicitud.getId(),
+                solicitud.getEstado(),
+                solicitud.getNombre(),
+                solicitud.getFechaSolicitud(),
+                solicitud.getTema().getNombre(),
+                solicitud.getCreatedAt()
+        );
     }
 }
-
