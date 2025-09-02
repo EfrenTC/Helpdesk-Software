@@ -10,6 +10,10 @@ import org.factoriaf5.digiital_academy.exception.TemaNotFoundException;
 import org.factoriaf5.digiital_academy.exception.SolicitudNotFoundException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.factoriaf5.digiital_academy.exception.BadRequestException;
+import org.factoriaf5.digiital_academy.exception.SolicitudNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,6 +59,38 @@ public class SolicitudService {
         return solicitud.getEstado();
     }
 
+    public SolicitudResponse atenderSolicitud(Long id, String nombreTecnico) {
+        Solicitud solicitud = solicitudRepository.findById(id)
+                .orElseThrow(() -> new SolicitudNotFoundException("Solicitud no encontrada"));
+
+        solicitud.setEstado("ATENDIDA");
+        solicitud.setTecnico(nombreTecnico);
+        solicitud.setAttendedAt(LocalDateTime.now());
+
+        Solicitud updated = solicitudRepository.save(solicitud);
+        return mapToResponse(updated);
+    }
+
+    public SolicitudResponse editarSolicitud(Long id, SolicitudRequest request) {
+        Solicitud solicitud = solicitudRepository.findById(id)
+                .orElseThrow(() -> new SolicitudNotFoundException("Solicitud no encontrada"));
+
+        solicitud.setNombre(request.getNombre());
+        solicitud.setFechaSolicitud(request.getFechaSolicitud());
+        solicitud.setDescripcion(request.getDescripcion());
+
+        if (request.getTemaId() != null) {
+            Tema tema = temaRepository.findById(request.getTemaId())
+                    .orElseThrow(() -> new TemaNotFoundException("Tema no encontrado"));
+            solicitud.setTema(tema);
+        }
+
+        solicitud.setUpdatedAt(LocalDateTime.now());
+
+        Solicitud updated = solicitudRepository.save(solicitud);
+        return mapToResponse(updated);
+    }
+
     private SolicitudResponse mapToResponse(Solicitud solicitud) {
         return new SolicitudResponse(
                 solicitud.getId(),
@@ -62,20 +98,29 @@ public class SolicitudService {
                 solicitud.getNombre(),
                 solicitud.getFechaSolicitud(),
                 solicitud.getTema().getNombre(),
-                solicitud.getCreatedAt()
+                solicitud.getCreatedAt(),
+                solicitud.getUpdatedAt(),
+                solicitud.getAttendedAt(),
+                solicitud.getTecnico()
         );
     }
 
-    public SolicitudResponse atenderSolicitud(Long id, String nombreTecnico) {
+/**
+ * @param id id de la solicitud a eliminar
+ * @throws SolicitudNotFoundException si no existe
+ * @throws BadRequestException si la solicitud no está ATENDIDA
+ */
+@Transactional
+public void eliminarSolicitud(Long id) {
     Solicitud solicitud = solicitudRepository.findById(id)
-            .orElseThrow(() -> new SolicitudNotFoundException("Solicitud no encontrada"));
+            .orElseThrow(() -> new SolicitudNotFoundException(id));
 
-    solicitud.setEstado("ATENDIDA");
-    solicitud.setTecnico(nombreTecnico);
-    solicitud.setAttendedAt(LocalDateTime.now());
+    String estado = solicitud.getEstado() == null ? "" : solicitud.getEstado().trim().toUpperCase();
 
-    Solicitud updated = solicitudRepository.save(solicitud);
-    return mapToResponse(updated);
+    if (!"ATENDIDA".equals(estado)) {
+        throw new BadRequestException("No se puede eliminar la solicitud: debe estar marcada como ATENDIDA.");
+    }
+
+    solicitudRepository.delete(solicitud);
 }
-    
 }

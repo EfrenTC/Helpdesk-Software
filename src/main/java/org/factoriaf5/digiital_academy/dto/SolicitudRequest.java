@@ -50,5 +50,17 @@ public class SolicitudRequest {
         this.descripcion = descripcion;
     }
 
-    // Getters & Setters
+    public class SolicitudAtenderRequest {
+
+    @NotBlank(message = "El nombre del técnico es obligatorio")
+    private String nombreTecnico;
+
+    public String getNombreTecnico() {
+        return nombreTecnico;
+    }
+
+    public void setNombreTecnico(String nombreTecnico) {
+        this.nombreTecnico = nombreTecnico;
+    }
+}
 }
