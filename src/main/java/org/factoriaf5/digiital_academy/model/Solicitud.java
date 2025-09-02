@@ -20,11 +20,15 @@ public class Solicitud {
 
     private String descripcion;
 
-    private String estado; // PENDIENTE / ATENDIDA
+    private String estado;
+
+    private String tecnico;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    private LocalDateTime attendedAt;
 
     public Long getId() {
         return id;
@@ -90,5 +94,21 @@ public class Solicitud {
         this.updatedAt = updatedAt;
     }
 
-    // Getters & Setters
+    public LocalDateTime getAttendedAt() {
+    return attendedAt;
+}
+
+public void setAttendedAt(LocalDateTime attendedAt) {
+    this.attendedAt = attendedAt;
+}
+
+public String getTecnico() {
+    return tecnico;
+}
+
+public void setTecnico(String tecnico) {
+    this.tecnico = tecnico;
+}
+
+
 }
