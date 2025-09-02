@@ -7,6 +7,7 @@ import org.factoriaf5.digiital_academy.model.Tema;
 import org.factoriaf5.digiital_academy.repository.SolicitudRepository;
 import org.factoriaf5.digiital_academy.repository.TemaRepository;
 import org.factoriaf5.digiital_academy.exception.TemaNotFoundException;
+import org.factoriaf5.digiital_academy.exception.SolicitudNotFoundException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,12 @@ public class SolicitudService {
                 .collect(Collectors.toList());
     }
 
+    public String obtenerEstadoSolicitud(Long id) {
+        Solicitud solicitud = solicitudRepository.findById(id)
+                .orElseThrow(() -> new SolicitudNotFoundException(id));
+        return solicitud.getEstado();
+    }
+
     private SolicitudResponse mapToResponse(Solicitud solicitud) {
         return new SolicitudResponse(
                 solicitud.getId(),
@@ -58,4 +65,17 @@ public class SolicitudService {
                 solicitud.getCreatedAt()
         );
     }
+
+    public SolicitudResponse atenderSolicitud(Long id, String nombreTecnico) {
+    Solicitud solicitud = solicitudRepository.findById(id)
+            .orElseThrow(() -> new SolicitudNotFoundException("Solicitud no encontrada"));
+
+    solicitud.setEstado("ATENDIDA");
+    solicitud.setTecnico(nombreTecnico);
+    solicitud.setAttendedAt(LocalDateTime.now());
+
+    Solicitud updated = solicitudRepository.save(solicitud);
+    return mapToResponse(updated);
+}
+    
 }
