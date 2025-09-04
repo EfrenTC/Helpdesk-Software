@@ -17,5 +17,4 @@ public class TemaResponse {
         return nombre;
     }
 
-   
 }

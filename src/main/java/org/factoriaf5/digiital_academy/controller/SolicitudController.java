@@ -6,9 +6,6 @@ import org.factoriaf5.digiital_academy.dto.SolicitudResponse;
 import org.factoriaf5.digiital_academy.service.SolicitudService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import jakarta.validation.Valid;
 import java.util.List;
 
@@ -41,26 +38,26 @@ public class SolicitudController {
     }
 
     @PatchMapping("/{id}/atender")
-public ResponseEntity<SolicitudResponse> atenderSolicitud(
-        @PathVariable Long id,
-        @Valid @RequestBody SolicitudAtenderRequest request) {
-    SolicitudResponse response = solicitudService.atenderSolicitud(id, request.getNombreTecnico());
-    return ResponseEntity.ok(response);
-}
+    public ResponseEntity<SolicitudResponse> atenderSolicitud(
+            @PathVariable Long id,
+            @Valid @RequestBody SolicitudAtenderRequest request) {
+        SolicitudResponse response = solicitudService.atenderSolicitud(id, request.getNombreTecnico());
+        return ResponseEntity.ok(response);
+    }
 
-@PutMapping("/{id}")
-public ResponseEntity<SolicitudResponse> editarSolicitud(
-        @PathVariable Long id,
-        @Valid @RequestBody SolicitudRequest request) {
+    @PutMapping("/{id}")
+    public ResponseEntity<SolicitudResponse> editarSolicitud(
+            @PathVariable Long id,
+            @Valid @RequestBody SolicitudRequest request) {
 
-    SolicitudResponse response = solicitudService.editarSolicitud(id, request);
-    return ResponseEntity.ok(response);
-}
+        SolicitudResponse response = solicitudService.editarSolicitud(id, request);
+        return ResponseEntity.ok(response);
+    }
 
-@DeleteMapping("/{id}")
-public ResponseEntity<Void> eliminarSolicitud(@PathVariable Long id) {
-    solicitudService.eliminarSolicitud(id);
-    return ResponseEntity.noContent().build(); 
-}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarSolicitud(@PathVariable Long id) {
+        solicitudService.eliminarSolicitud(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

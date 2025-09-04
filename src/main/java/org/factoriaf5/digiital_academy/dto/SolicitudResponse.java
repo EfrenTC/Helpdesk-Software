@@ -14,7 +14,7 @@ public class SolicitudResponse {
     private String tecnico;
 
     public SolicitudResponse(Long id, String estado, String nombre, LocalDateTime fechaSolicitud, String tema,
-                             LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime attendedAt, String tecnico) {
+            LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime attendedAt, String tecnico) {
         this.id = id;
         this.estado = estado;
         this.nombre = nombre;
@@ -26,13 +26,39 @@ public class SolicitudResponse {
         this.tecnico = tecnico;
     }
 
-    public Long getId() { return id; }
-    public String getEstado() { return estado; }
-    public String getNombre() { return nombre; }
-    public LocalDateTime getFechaSolicitud() { return fechaSolicitud; }
-    public String getTema() { return tema; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public LocalDateTime getAttendedAt() { return attendedAt; }
-    public String getTecnico() { return tecnico; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public LocalDateTime getFechaSolicitud() {
+        return fechaSolicitud;
+    }
+
+    public String getTema() {
+        return tema;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public LocalDateTime getAttendedAt() {
+        return attendedAt;
+    }
+
+    public String getTecnico() {
+        return tecnico;
+    }
 }

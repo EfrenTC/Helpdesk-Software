@@ -10,10 +10,8 @@ import org.factoriaf5.digiital_academy.exception.TemaNotFoundException;
 import org.factoriaf5.digiital_academy.exception.SolicitudNotFoundException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.factoriaf5.digiital_academy.exception.BadRequestException;
-import org.factoriaf5.digiital_academy.exception.SolicitudNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -101,26 +99,26 @@ public class SolicitudService {
                 solicitud.getCreatedAt(),
                 solicitud.getUpdatedAt(),
                 solicitud.getAttendedAt(),
-                solicitud.getTecnico()
-        );
+                solicitud.getTecnico());
     }
 
-/**
- * @param id id de la solicitud a eliminar
- * @throws SolicitudNotFoundException si no existe
- * @throws BadRequestException si la solicitud no está ATENDIDA
- */
-@Transactional
-public void eliminarSolicitud(Long id) {
-    Solicitud solicitud = solicitudRepository.findById(id)
-            .orElseThrow(() -> new SolicitudNotFoundException(id));
+    /**
+     * @param id 
+     * @throws SolicitudNotFoundException 
+     * @throws BadRequestException       
+     */
+    
+    @Transactional
+    public void eliminarSolicitud(Long id) {
+        Solicitud solicitud = solicitudRepository.findById(id)
+                .orElseThrow(() -> new SolicitudNotFoundException(id));
 
-    String estado = solicitud.getEstado() == null ? "" : solicitud.getEstado().trim().toUpperCase();
+        String estado = solicitud.getEstado() == null ? "" : solicitud.getEstado().trim().toUpperCase();
 
-    if (!"ATENDIDA".equals(estado)) {
-        throw new BadRequestException("No se puede eliminar la solicitud: debe estar marcada como ATENDIDA.");
+        if (!"ATENDIDA".equals(estado)) {
+            throw new BadRequestException("No se puede eliminar la solicitud: debe estar marcada como ATENDIDA.");
+        }
+
+        solicitudRepository.delete(solicitud);
     }
-
-    solicitudRepository.delete(solicitud);
-}
 }

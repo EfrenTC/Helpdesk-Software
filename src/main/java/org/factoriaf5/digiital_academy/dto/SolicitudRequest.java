@@ -50,17 +50,17 @@ public class SolicitudRequest {
         this.descripcion = descripcion;
     }
 
-    public class SolicitudAtenderRequest {
+    public static class SolicitudAtenderRequest {
 
-    @NotBlank(message = "El nombre del técnico es obligatorio")
-    private String nombreTecnico;
+        @NotBlank(message = "El nombre del técnico es obligatorio")
+        private String nombreTecnico;
 
-    public String getNombreTecnico() {
-        return nombreTecnico;
+        public String getNombreTecnico() {
+            return nombreTecnico;
+        }
+
+        public void setNombreTecnico(String nombreTecnico) {
+            this.nombreTecnico = nombreTecnico;
+        }
     }
-
-    public void setNombreTecnico(String nombreTecnico) {
-        this.nombreTecnico = nombreTecnico;
-    }
-}
 }

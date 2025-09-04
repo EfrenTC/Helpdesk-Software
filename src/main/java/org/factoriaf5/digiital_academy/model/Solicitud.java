@@ -95,20 +95,19 @@ public class Solicitud {
     }
 
     public LocalDateTime getAttendedAt() {
-    return attendedAt;
-}
+        return attendedAt;
+    }
 
-public void setAttendedAt(LocalDateTime attendedAt) {
-    this.attendedAt = attendedAt;
-}
+    public void setAttendedAt(LocalDateTime attendedAt) {
+        this.attendedAt = attendedAt;
+    }
 
-public String getTecnico() {
-    return tecnico;
-}
+    public String getTecnico() {
+        return tecnico;
+    }
 
-public void setTecnico(String tecnico) {
-    this.tecnico = tecnico;
-}
-
+    public void setTecnico(String tecnico) {
+        this.tecnico = tecnico;
+    }
 
 }
