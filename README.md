@@ -65,8 +65,7 @@ src/main/java/org/factoriaf5/digital_academy/
 1. Clonar el repositorio:
 
 ```bash
-git clone https://github.com/usuario/digital-academy-support-api.git
-cd digital-academy-support-api
+git clone https://github.com/EfrenTC/Helpdesk-Software.git
 Construir con Maven:
 
 mvn clean install
@@ -85,7 +84,6 @@ URL: jdbc:h2:mem:testdb
 Usuario: SA
 Contraseña: (vacío)
 Consola: http://localhost:8080/h2-console
-PostgreSQL (producción / desarrollo real)
 Configurar los datos de conexión en application.properties
 
 📝 Diagrama de clases
@@ -95,7 +93,6 @@ DTOs: para requests y responses
 
 Relación: Solicitud → Tema (muchos a uno)
 
-(Se puede añadir imagen del diagrama aquí)
 
 🧪 Cobertura de tests
 Test unitarios con JUnit 5 y Mockito
