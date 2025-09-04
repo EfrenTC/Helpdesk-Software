@@ -9,9 +9,9 @@ API REST para la **gestión de solicitudes de soporte** y **temas**, desarrollad
 | Tecnología | Propósito |
 |------------|-----------|
 | Java 21 | Lenguaje principal |
-| Spring Boot 3 | Framework para la API REST |
+| Spring Boot| Framework para la API REST |
 | Spring Data JPA | Persistencia de datos |
-| PostgreSQL / H2 | Base de datos |
+| H2 | Base de datos |
 | JUnit 5 + Mockito | Tests unitarios |
 | Swagger/OpenAPI | Documentación de endpoints |
 
@@ -19,14 +19,13 @@ API REST para la **gestión de solicitudes de soporte** y **temas**, desarrollad
 
 ## 📂 Estructura del proyecto
 
-src/main/java/org/factoriaf5/digital_academy/
-├─ model # Entidades JPA (Solicitud, Tema)
-├─ dto # Objetos de transferencia de datos
-├─ repository # Repositorios JPA
-├─ service # Lógica de negocio
-├─ mapper # Conversión entre entidades y DTOs
-├─ controller # Endpoints REST
-├─ exception # Manejo de excepciones personalizadas
+─ model # Entidades JPA (Solicitud, Tema)
+─ dto # Objetos de transferencia de datos
+─ repository # Repositorios JPA
+─ service # Lógica de negocio
+─ mapper # Conversión entre entidades y DTOs
+─ controller # Endpoints REST
+─ exception # Manejo de excepciones personalizadas
 
 ---
 
@@ -60,6 +59,18 @@ src/main/java/org/factoriaf5/digital_academy/
 
 ---
 
+
+## 🧪 Cobertura de tests
+![alt text](image.png)
+
+---
+
+## 📝 Diagrama de clases
+
+![alt text](diagrama_clases.png)
+
+---
+
 ## 🏃‍♂️ Cómo ejecutar el proyecto
 
 1. Clonar el repositorio:
@@ -86,16 +97,6 @@ Contraseña: (vacío)
 Consola: http://localhost:8080/h2-console
 Configurar los datos de conexión en application.properties
 
-📝 Diagrama de clases
-Entidades principales: Solicitud, Tema
-
-DTOs: para requests y responses
-
-Relación: Solicitud → Tema (muchos a uno)
-
-
-🧪 Cobertura de tests
-Test unitarios con JUnit 5 y Mockito
 
 Servicios y controladores probados para garantizar que la lógica de negocio y los endpoints funcionen correctamente
 
